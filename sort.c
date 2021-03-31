@@ -1,41 +1,35 @@
 #include <stdio.h>
 #include <stdlib.h> 
-
+#include <time.h> 
 
 void insertionSort(int *vet,int size);
 void selectionSort (int *vet,int size);
 
 int main() {
-	int n = 5;
-	int* vet = (int*)malloc(n * sizeof(int)); 
+	int n = 100,k=0;
+	clock_t start, end;
+	double cpu_time_used;
+	int* vet; 
 
-
-	if(vet == NULL){
-		exit(0);
-	}else{
-		vet =  (int[5]){9,4,7,6,1};
-		printf("Antes: ");
-		for (int i = 0;i<n;i++) {
-			if(i != 4) {
-				printf("%d, ",vet[i]);	
-			}else{
-				printf("%d ",vet[i]);
-			}
+	while( k<12){
+		vet = (int*)malloc(n * sizeof(int)); 
+		for(int i =0;i<n;i++){
+			vet[i] = n - i;
 		}
+		
 		printf("\n---------------------------------\n");
-		printf("Depois: ");
-		selectionSort(vet,n);
-		for (int i = 0;i<n;i++) {
-			if(i != 4) {
-				printf("%d, ",vet[i]);	
-			}else{
-				printf("%d ",vet[i]);
-			}
-		}
+		start = clock();
+		insertionSort(vet,n);
+		end = clock();
+		cpu_time_used = ((double) (end - start))/CLOCKS_PER_SEC;
+		printf("Tamanho: %d Tempo: %f\n",n,cpu_time_used);
+		n = n*2;
+		free(vet);
+		k++;
 	}
+
 	return 0;
 }
-
 
 void insertionSort(int *vet,int size){
 	int x,y,valor;
